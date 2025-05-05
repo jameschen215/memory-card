@@ -1,0 +1,23 @@
+.btn {
+	outline: none;
+	border: none;
+	background-color: transparent;
+
+	width: 24px;
+	height: 24px;
+	padding: 2px;
+	margin: 0;
+	border-radius: 50%;
+
+	will-change: background-color;
+	transition: background-color 250ms ease-in-out;
+
+	display: grid;
+	place-content: center;
+
+	cursor: pointer;
+}
+
+.btn:hover {
+	background-color: hsl(0deg 0% 0% / 0.1);
+}
