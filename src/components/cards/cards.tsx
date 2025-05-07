@@ -45,7 +45,8 @@ export default function Cards({
 	function handleClick(id: number) {
 		// Play click sound
 		if (soundOn) {
-			const clickSound = new Audio('/audio/flip-card.mp3');
+			// const clickSound = new Audio('/audio/flip-card.mp3');
+			const clickSound = new Audio('/audio/card-flip.wav');
 			clickSound.volume = 0.5;
 			clickSound.play();
 		}
@@ -55,7 +56,7 @@ export default function Cards({
 
 		setTimeout(() => {
 			setFlipped(false);
-		}, 500);
+		}, 400);
 
 		if (clickedEmojis.includes(id)) {
 			// Emoji already clicked: reset game
@@ -72,7 +73,7 @@ export default function Cards({
 				setClickedEmojis([...clickedEmojis, id]);
 				// Show a new set of random images
 				setGameEmojis(shuffleArray(allEmojis!).slice(0, 6));
-			}, 250);
+			}, 200);
 		}
 	}
 

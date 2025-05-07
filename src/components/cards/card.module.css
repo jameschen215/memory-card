@@ -10,7 +10,7 @@
 	transform-style: preserve-3d;
 	transform: rotateY(0deg);
 
-	transition: transform 500ms ease-in-out;
+	transition: transform 400ms ease-in-out;
 }
 
 .card.flipped .flip-container {

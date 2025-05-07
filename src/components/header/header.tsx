@@ -1,6 +1,6 @@
 import styles from './header.module.css';
 
-import { RotateCw, Repeat, Repeat2, Volume2, VolumeOff } from 'lucide-react';
+import { RotateCw, Volume2, VolumeOff } from 'lucide-react';
 import IconButton from './icon-button/icon-button';
 
 type HeaderProps = {
@@ -21,7 +21,7 @@ export default function Header({
 			</a>
 
 			<div className={styles['button-group']}>
-				<IconButton onClick={onSoundClick} title="Sound toggler">
+				<IconButton onClick={onSoundClick} title="Toggle sound effect">
 					{soundOn ? (
 						<Volume2 strokeWidth={1.5} />
 					) : (
@@ -30,7 +30,7 @@ export default function Header({
 				</IconButton>
 
 				<IconButton onClick={onResetClick} title="Reset game">
-					<Repeat2 strokeWidth={1.5} />
+					<RotateCw strokeWidth={1.5} />
 				</IconButton>
 			</div>
 		</header>
