@@ -1,10 +1,23 @@
 :root {
 	--white: hsla(0, 0%, 100%, 0.87);
 	--black: hsl(0, 0%, 14%);
-	--main-bgc: hsl(0deg 0% 97%);
+	--bg-blue-1: hsl(191, 100%, 40%);
+	--bg-blue-2: hsl(195, 100%, 35%);
 	--outline: hsl(30, 100%, 70%);
-	--green: hsl(120, 100%, 50%);
-	--orange: hsl(45, 100%, 70%);
+	--text-green: hsl(120, 100%, 50%);
+
+	--text-yellow: hsl(45, 100%, 70%);
+	--text-yellow: #fdd602;
+	--text-red: #f7aef8;
+
+	/* Card */
+	--bg-front-face: hsl(0, 0%, 95%);
+	--bg-back-face: linear-gradient(
+		45deg,
+		hsl(155, 90%, 35%) 0%,
+		hsl(160, 55%, 50%) 100%
+	);
+	--card-shadow: 0 0 5px 5px hsl(0, 0%, 0%, 0.1);
 }
 
 html {
@@ -23,10 +36,8 @@ body {
 	min-height: 100vh;
 
 	color: var(--white);
-	background-color: var(--main-bgc);
-
-	background: #00b4db; /* fallback for old browsers */
-	background: linear-gradient(45deg, hsl(195, 100%, 35%), hsl(191, 100%, 40%));
+	background: var(--bg-blue-1);
+	background: linear-gradient(45deg, var(--bg-blue-2), var(--bg-blue-1));
 }
 
 a:focus-visible,

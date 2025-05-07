@@ -1,6 +1,7 @@
 .card {
 	position: relative;
 	perspective: 100em;
+
 	cursor: pointer;
 }
 
@@ -21,7 +22,7 @@
 	width: 120px;
 	aspect-ratio: 5 / 6;
 	border-radius: 0.35em;
-	box-shadow: 0 0 5px 2px hsl(0, 0%, 0%, 0.2);
+	box-shadow: var(--card-shadow);
 
 	display: flex;
 	justify-content: center;
@@ -31,7 +32,10 @@
 }
 
 .front {
-	background-color: hsl(0, 0%, 95%);
+	background-color: var(--bg-front-face);
+
+	will-change: opacity;
+	transition: opacity 250ms ease;
 }
 
 .back {
@@ -39,15 +43,19 @@
 	inset: 0;
 	transform: rotateY(180deg);
 
-	background-image: linear-gradient(
-		45deg,
-		hsl(155, 90%, 35%) 0%,
-		hsl(160, 55%, 50%) 100%
-	);
+	background: var(--bg-back-face);
 }
 
 .emoji {
 	font-size: 7.2rem;
+}
+
+.card:hover .front {
+	opacity: 0.7;
+}
+
+.card:active .front {
+	opacity: 1;
 }
 
 .text {
@@ -56,24 +64,6 @@
 	transform-origin: center;
 	transform: rotateZ(90deg);
 }
-
-/* @keyframes gelatine {
-	from {
-		transform: scale(1, 1);
-	}
-	25% {
-		transform: scale(0.95, 1.05);
-	}
-	50% {
-		transform: scale(1.05, 0.95);
-	}
-	75% {
-		transform: scale(0.975, 1.075);
-	}
-	to {
-		transform: scale(1, 1);
-	}
-} */
 
 @media screen and (min-width: 768px) {
 }

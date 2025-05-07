@@ -1,6 +1,6 @@
 import styles from './header.module.css';
 
-import { RotateCw, Volume2, VolumeOff } from 'lucide-react';
+import { Repeat, Volume2, VolumeOff } from 'lucide-react';
 import IconButton from './icon-button/icon-button';
 
 type HeaderProps = {
@@ -30,7 +30,7 @@ export default function Header({
 				</IconButton>
 
 				<IconButton onClick={onResetClick} title="Reset game">
-					<RotateCw strokeWidth={1.5} />
+					<Repeat strokeWidth={1.5} />
 				</IconButton>
 			</div>
 		</header>

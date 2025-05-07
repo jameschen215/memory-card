@@ -1,0 +1,32 @@
+.message {
+	margin: 0 auto;
+	height: 36px;
+	padding: 0 1em;
+	border-radius: 0.25em;
+	text-align: center;
+	/* background-color: hsl(0, 100%, 0%, 0.1); */
+
+	font-size: 1.8rem;
+	font-weight: 600;
+	text-transform: uppercase;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.win {
+	color: var(--text-green);
+}
+
+.lose {
+	color: var(--text-red);
+}
+
+.record {
+	color: var(--text-yellow);
+}
+
+.message.empty {
+	background-color: transparent;
+}

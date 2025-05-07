@@ -20,9 +20,9 @@
 }
 
 .score__text__score {
-	color: var(--green);
+	color: var(--text-green);
 }
 
 .score__text__best-score {
-	color: var(--orange);
+	color: var(--text-yellow);
 }

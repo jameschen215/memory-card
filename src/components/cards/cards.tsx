@@ -13,6 +13,7 @@ type CardsProps = {
 	bestScore: number;
 	setScore: React.Dispatch<SetStateAction<number>>;
 	setBestScore: React.Dispatch<SetStateAction<number>>;
+	setMessage: React.Dispatch<SetStateAction<string | null>>;
 };
 
 export default function Cards({
@@ -21,6 +22,7 @@ export default function Cards({
 	bestScore,
 	setScore,
 	setBestScore,
+	setMessage,
 }: CardsProps) {
 	const [allEmojis, setAllEmojis] = useState<EmojiItem[] | null>(null);
 	const [gameEmojis, setGameEmojis] = useState<EmojiItem[] | null>(null);
@@ -62,9 +64,15 @@ export default function Cards({
 			// Emoji already clicked: reset game
 			setScore(0);
 			setClickedEmojis([]);
+			setMessage('Lose!');
 		} else {
 			// New emoji clicked, update the scores immediately
+			setMessage('Win!');
 			const newScore = score + 1;
+			if (newScore > bestScore) {
+				setMessage('🎉 Record breaker!');
+			}
+
 			setScore(newScore);
 			setBestScore(Math.max(newScore, bestScore));
 
