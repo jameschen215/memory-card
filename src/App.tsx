@@ -8,12 +8,37 @@ import ScorePanel from './components/score-panel/score-panel';
 export default function App() {
 	const [score, setScore] = useState(0);
 	const [bestScore, setBestScore] = useState(0);
+	const [soundOn, setSoundOn] = useState(true);
+
+	function playClickSound() {
+		const clickSound = new Audio('/audio/click.mp3');
+		clickSound.volume = 0.5;
+		clickSound.play();
+	}
+
+	function handleReset() {
+		if (soundOn) playClickSound();
+
+		setScore(0);
+		setBestScore(0);
+	}
+
+	function handleToggleSound() {
+		if (!soundOn) playClickSound();
+
+		setSoundOn((prev) => !prev);
+	}
 
 	return (
 		<>
-			<Header />
+			<Header
+				soundOn={soundOn}
+				onResetClick={() => handleReset()}
+				onSoundClick={() => handleToggleSound()}
+			/>
 			<ScorePanel score={score} bestScore={bestScore} />
 			<Cards
+				soundOn={soundOn}
 				score={score}
 				bestScore={bestScore}
 				setScore={setScore}

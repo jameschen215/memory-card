@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
-const apiEnd = 'https://api.emojisworld.fr/v1/random?&categories=7';
+const apiEnd = 'https://api.emojisworld.fr/v1/random?&categories=7&limit=18';
+// const apiEnd = 'https://api.emojisworld.fr/v1/random?&categories=4';
 
 export const EmojiItemSchema = z.object({
 	id: z.number(),

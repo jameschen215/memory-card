@@ -18,3 +18,17 @@
 - Change favicon
 
 ## What I've learned from the project
+
+### Stable key Props in React
+
+When using dynamic content in a list of components (like cards), it's important to provide stable key props. If you use something like a random ID from an API that changes every time, React will treat each component as new on every render. This causes animations, transitions, and component state to reset unexpectedly.
+
+To avoid this, use:
+
+A stable identifier that doesn't change between renders (e.g. a consistent ID from your dataset),
+
+Or the array index if the order of elements is fixed and doesn’t change dynamically.
+
+This ensures React can properly reuse components and preserve their state and animation transitions.
+
+See code in `cards.tsx` and `card.tsx`.

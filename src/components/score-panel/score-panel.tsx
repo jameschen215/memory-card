@@ -8,12 +8,13 @@ type ScorePanelProps = {
 export default function ScorePanel({ score, bestScore }: ScorePanelProps) {
 	return (
 		<div className={styles['score-panel']}>
-			<span className={styles['score-panel__current-score']}>
-				Current: {score}
-			</span>
-			<span className={styles['score-panel__best-score']}>
-				Best: {bestScore}
-			</span>
+			<div className={styles['score__text']}>
+				Score: <span className={styles['score__text__score']}>{score}</span>
+			</div>
+			<div className={styles['score__text']}>
+				Best:{' '}
+				<span className={styles['score__text__best-score']}>{bestScore}</span>
+			</div>
 		</div>
 	);
 }

@@ -6,3 +6,23 @@
 	gap: 2em;
 	font-weight: 700;
 }
+
+.score__text {
+	display: flex;
+	align-items: center;
+	gap: 0.6em;
+}
+
+.score__text__score,
+.score__text__best-score {
+	font-size: 2rem;
+	text-shadow: 1px 1px 0 hsla(0, 0%, 0%, 0.1);
+}
+
+.score__text__score {
+	color: var(--green);
+}
+
+.score__text__best-score {
+	color: var(--orange);
+}

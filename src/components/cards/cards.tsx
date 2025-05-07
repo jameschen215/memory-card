@@ -3,10 +3,12 @@ import styles from './cards.module.css';
 
 import { shuffleArray } from '../../utils/utils';
 import { fetchEmojis } from '../../utils/fetch-data';
-import type { EmojiItem } from '../../utils/fetch-data';
 import { SetStateAction } from 'react';
+import { Card } from './card';
+import type { EmojiItem } from '../../utils/fetch-data';
 
 type CardsProps = {
+	soundOn: boolean;
 	score: number;
 	bestScore: number;
 	setScore: React.Dispatch<SetStateAction<number>>;
@@ -14,6 +16,7 @@ type CardsProps = {
 };
 
 export default function Cards({
+	soundOn,
 	score,
 	bestScore,
 	setScore,
@@ -22,6 +25,7 @@ export default function Cards({
 	const [allEmojis, setAllEmojis] = useState<EmojiItem[] | null>(null);
 	const [gameEmojis, setGameEmojis] = useState<EmojiItem[] | null>(null);
 	const [clickedEmojis, setClickedEmojis] = useState<number[]>([]);
+	const [flipped, setFlipped] = useState(false);
 
 	useEffect(() => {
 		async function loadEmojis() {
@@ -39,51 +43,53 @@ export default function Cards({
 	}, []);
 
 	function handleClick(id: number) {
-		console.log({ id });
+		// Play click sound
+		if (soundOn) {
+			const clickSound = new Audio('/audio/flip-card.mp3');
+			clickSound.volume = 0.5;
+			clickSound.play();
+		}
+
+		// Animation
+		setFlipped(true);
+
+		setTimeout(() => {
+			setFlipped(false);
+		}, 500);
+
 		if (clickedEmojis.includes(id)) {
 			// Emoji already clicked: reset game
 			setScore(0);
 			setClickedEmojis([]);
 		} else {
-			// New emoji clicked
+			// New emoji clicked, update the scores immediately
 			const newScore = score + 1;
 			setScore(newScore);
 			setBestScore(Math.max(newScore, bestScore));
-			setClickedEmojis([...clickedEmojis, id]);
 
-			// Show a new set of random images
-			setGameEmojis(shuffleArray(allEmojis!).slice(0, 6));
-
-			console.log({ score, bestScore });
+			// Update cards content when cards flip front face is down
+			setTimeout(() => {
+				setClickedEmojis([...clickedEmojis, id]);
+				// Show a new set of random images
+				setGameEmojis(shuffleArray(allEmojis!).slice(0, 6));
+			}, 250);
 		}
 	}
 
 	return (
-		<div className={styles.cards}>
-			{!gameEmojis && <div>Loading...</div>}
-			{gameEmojis &&
-				gameEmojis.map((item) => (
-					<Card
-						key={item.id}
-						item={item}
-						onClick={() => handleClick(item.id)}
-					/>
-				))}
+		<div className={styles['cards-wrapper']}>
+			<div className={styles.cards}>
+				{!gameEmojis && <div>Loading...</div>}
+				{gameEmojis &&
+					gameEmojis.map((item, index) => (
+						<Card
+							key={index}
+							content={item}
+							flipped={flipped}
+							onClick={() => handleClick(item.id)}
+						/>
+					))}
+			</div>
 		</div>
-	);
-}
-
-type CardProps = {
-	item: EmojiItem;
-	onClick?: React.MouseEventHandler<HTMLButtonElement>;
-};
-
-function Card({ item, onClick }: CardProps) {
-	const { emoji, name } = item;
-	return (
-		<button className={styles.card} onClick={onClick}>
-			<span className={styles.emoji}>{emoji}</span>
-			<span className={styles.name}>{name}</span>
-		</button>
 	);
 }
