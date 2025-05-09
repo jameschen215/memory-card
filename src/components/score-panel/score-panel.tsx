@@ -1,4 +1,5 @@
 import styles from './score-panel.module.css';
+import Counter from '../counter/counter';
 
 type ScorePanelProps = {
 	score: number;
@@ -8,12 +9,13 @@ type ScorePanelProps = {
 export default function ScorePanel({ score, bestScore }: ScorePanelProps) {
 	return (
 		<div className={styles['score-panel']}>
-			<div className={styles['score__text']}>
-				Score: <span className={styles['score__text__score']}>{score}</span>
+			<div className={styles['score-panel__score']}>
+				<span className={styles['score-panel__score__label']}>Score:</span>
+				<Counter classNames='green' value={score} />
 			</div>
-			<div className={styles['score__text']}>
-				Best:{' '}
-				<span className={styles['score__text__best-score']}>{bestScore}</span>
+			<div className={styles['score-panel__score']}>
+				<span className={styles['score-panel__score__label']}>Score:</span>
+				<Counter classNames='yellow' value={bestScore} />
 			</div>
 		</div>
 	);

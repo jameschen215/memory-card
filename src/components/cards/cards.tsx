@@ -64,13 +64,13 @@ export default function Cards({
 			// Emoji already clicked: reset game
 			setScore(0);
 			setClickedEmojis([]);
-			setMessage('Lose!');
+			setMessage('lose');
 		} else {
 			// New emoji clicked, update the scores immediately
-			setMessage('Win!');
+			setMessage('win');
 			const newScore = score + 1;
 			if (newScore > bestScore) {
-				setMessage('🎉 Record breaker!');
+				setMessage('record');
 			}
 
 			setScore(newScore);

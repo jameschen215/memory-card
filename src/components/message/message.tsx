@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
 import styles from './message.module.css';
+import { getRandomItem } from '../../utils/utils';
+import { MESSAGES } from '../../constants/game-messages';
 
 type MessageProps = {
 	msg: {
@@ -14,20 +16,35 @@ export default function Message({ msg }: MessageProps) {
 	const timeOutRef = useRef<number | null>(null);
 
 	let style: string;
-	if (visibleMessage?.toLowerCase().includes('win')) {
-		style = 'win';
-	} else if (visibleMessage?.toLowerCase().includes('lose')) {
-		style = 'lose';
-	} else if (visibleMessage?.toLowerCase().includes('record')) {
-		style = 'record';
-	} else {
-		style = 'empty';
+	let message: string | null;
+
+	switch (msg.text) {
+		case 'win': {
+			style = 'win';
+			message = getRandomItem(MESSAGES.win);
+			break;
+		}
+		case 'lose': {
+			style = 'lose';
+			message = getRandomItem(MESSAGES.lose);
+			break;
+		}
+		case 'record': {
+			style = 'record';
+			message = getRandomItem(MESSAGES.record);
+			break;
+		}
+		default: {
+			style = 'empty';
+			message = null;
+			break;
+		}
 	}
 
 	useEffect(() => {
-		if (!msg.text) return;
+		if (!message) return;
 
-		setVisibleMessage(msg.text);
+		setVisibleMessage(message);
 
 		if (timeOutRef.current) {
 			clearTimeout(timeOutRef.current);
@@ -37,7 +54,7 @@ export default function Message({ msg }: MessageProps) {
 			setVisibleMessage(null);
 			timeOutRef.current = null;
 		}, 1000);
-	}, [msg.id, msg.text]);
+	}, [msg.id]);
 
 	return (
 		<div className={`${styles.message} ${styles[style]}`}>

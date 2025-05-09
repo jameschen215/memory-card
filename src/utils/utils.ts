@@ -17,3 +17,8 @@ export function shuffleArray<T>(array: T[]) {
 
 	return shuffled;
 }
+
+export function getRandomItem<T>(array: T[]): T {
+	const index = Math.floor(Math.random() * array.length);
+	return array[index];
+}

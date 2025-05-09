@@ -7,6 +7,12 @@
 	font-weight: 700;
 }
 
+.score-panel__score {
+	display: flex;
+	align-items: center;
+	gap: 0.25em;
+}
+
 .score__text {
 	display: flex;
 	align-items: center;
