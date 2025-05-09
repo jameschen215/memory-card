@@ -1,3 +1,5 @@
+export const MESSAGE_TRANSITION_TIME = 1000;
+
 export const MESSAGES = {
 	win: [
 		'You nailed it!',

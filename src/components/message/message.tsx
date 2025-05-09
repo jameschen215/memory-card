@@ -1,63 +1,41 @@
 import { useEffect, useRef, useState } from 'react';
 
 import styles from './message.module.css';
-import { getRandomItem } from '../../utils/utils';
-import { MESSAGES } from '../../constants/game-messages';
+import { getMessageAndStyle } from '../../helpers/get-message-and-style';
+import { MESSAGE_TRANSITION_TIME } from '../../constants/game-messages';
 
 type MessageProps = {
-	msg: {
+	state: {
 		id: number;
 		text: string | null;
 	};
 };
 
-export default function Message({ msg }: MessageProps) {
+export default function Message({ state }: MessageProps) {
 	const [visibleMessage, setVisibleMessage] = useState<string | null>(null);
-	const timeOutRef = useRef<number | null>(null);
-
-	let style: string;
-	let message: string | null;
-
-	switch (msg.text) {
-		case 'win': {
-			style = 'win';
-			message = getRandomItem(MESSAGES.win);
-			break;
-		}
-		case 'lose': {
-			style = 'lose';
-			message = getRandomItem(MESSAGES.lose);
-			break;
-		}
-		case 'record': {
-			style = 'record';
-			message = getRandomItem(MESSAGES.record);
-			break;
-		}
-		default: {
-			style = 'empty';
-			message = null;
-			break;
-		}
-	}
+	const msgRef = useRef<HTMLDivElement>(null);
+	// const timeOutRef = useRef<number | null>(null);
 
 	useEffect(() => {
-		if (!message) return;
+		if (!state.text) return;
+
+		const { style, message } = getMessageAndStyle(state.text);
 
 		setVisibleMessage(message);
+		msgRef.current?.classList.add(styles[style]);
+		msgRef.current?.classList.add(styles['is-changing']);
 
-		if (timeOutRef.current) {
-			clearTimeout(timeOutRef.current);
-		}
-
-		timeOutRef.current = window.setTimeout(() => {
+		const timeoutId = setTimeout(() => {
 			setVisibleMessage(null);
-			timeOutRef.current = null;
-		}, 1000);
-	}, [msg.id]);
+			msgRef.current?.classList.remove(styles[style]);
+			msgRef.current?.classList.remove(styles['is-changing']);
+		}, MESSAGE_TRANSITION_TIME);
+
+		return () => clearTimeout(timeoutId);
+	}, [state.id, state.text]);
 
 	return (
-		<div className={`${styles.message} ${styles[style]}`}>
+		<div className={styles.message} ref={msgRef}>
 			{visibleMessage ? visibleMessage : ''}
 		</div>
 	);

@@ -1,15 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 
 import styles from './counter.module.css';
-import { TRANSITION_TIME, DECIMAL_BASE } from '../../constants/counter';
-
+import { COUNTER_TRANSITION_TIME, DECIMAL_BASE } from '../../constants/counter';
 
 type CounterProps = {
 	classNames: string;
 	value: number;
 };
 
-export default function Counter({classNames, value }: CounterProps) {
+export default function Counter({ classNames, value }: CounterProps) {
 	const tens = Math.floor(value / DECIMAL_BASE);
 	const ones = value % DECIMAL_BASE;
 
@@ -63,7 +62,7 @@ function CounterUnit({
 
 			// save the current value as the previous value for the next increment
 			setPrevValue(value);
-		}, TRANSITION_TIME);
+		}, COUNTER_TRANSITION_TIME);
 
 		// clear
 		return () => clearTimeout(timeout);

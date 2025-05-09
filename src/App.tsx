@@ -40,7 +40,7 @@ export default function App() {
 				onSoundClick={() => handleToggleSound()}
 			/>
 			<ScorePanel score={score} bestScore={bestScore} />
-			<Message msg={{ id: Date.now(), text: message }} />
+			<Message state={{ id: Date.now(), text: message }} />
 			<Cards
 				soundOn={soundOn}
 				score={score}

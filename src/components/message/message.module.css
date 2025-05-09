@@ -1,17 +1,21 @@
 .message {
 	margin: 0 auto;
-	height: 36px;
+	height: 3.6rem;
 	padding: 0 1em;
 	border-radius: 0.25em;
 	text-align: center;
-	/* background-color: hsl(0, 100%, 0%, 0.1); */
+	/* background-color: hsl(0, 100%, 100%, 0.5); */
 
-	font-size: 1.8rem;
+	font-size: 2.4rem;
 	font-weight: 600;
 
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	/* text-shadow: 1px 1px 0px hsl(0deg 0% 100%); */
+	text-shadow: 3px 3px 6px hsla(0, 0%, 0%, 0.5);
+
+	will-change: transform;
 }
 
 .win {
@@ -28,4 +32,20 @@
 
 .message.empty {
 	background-color: transparent;
+}
+
+.message.is-changing {
+	animation: grow 250ms ease;
+}
+
+@keyframes grow {
+	from {
+		transform: scale(0);
+	}
+	75% {
+		transform: scale(1.2);
+	}
+	to {
+		transform: scale(1);
+	}
 }
