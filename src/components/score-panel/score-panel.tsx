@@ -11,11 +11,11 @@ export default function ScorePanel({ score, bestScore }: ScorePanelProps) {
 		<div className={styles['score-panel']}>
 			<div className={styles['score-panel__score']}>
 				<span className={styles['score-panel__score__label']}>Score:</span>
-				<Counter classNames='green' value={score} />
+				<Counter classNames="green" value={score} />
 			</div>
 			<div className={styles['score-panel__score']}>
-				<span className={styles['score-panel__score__label']}>Score:</span>
-				<Counter classNames='yellow' value={bestScore} />
+				<span className={styles['score-panel__score__label']}>Best:</span>
+				<Counter classNames="yellow" value={bestScore} />
 			</div>
 		</div>
 	);

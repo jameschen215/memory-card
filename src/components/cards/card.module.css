@@ -1,6 +1,7 @@
 .card {
 	position: relative;
 	perspective: 100em;
+	user-select: none;
 
 	cursor: pointer;
 }
@@ -35,7 +36,7 @@
 	background-color: var(--bg-front-face);
 
 	will-change: opacity;
-	transition: opacity 250ms ease;
+	transition: opacity 200ms ease;
 }
 
 .back {
@@ -56,6 +57,10 @@
 
 .card:active .front {
 	opacity: 1;
+}
+
+.card.disabled {
+	pointer-events: none;
 }
 
 .text {

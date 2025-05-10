@@ -21,16 +21,25 @@ export default function Header({
 			</a>
 
 			<div className={styles['button-group']}>
-				<IconButton onClick={onSoundClick} title="Toggle sound effect">
-					{soundOn ? (
-						<Volume2 strokeWidth={1.5} />
-					) : (
-						<VolumeOff strokeWidth={1.5} />
-					)}
+				<IconButton
+					onClick={onSoundClick}
+					title="Toggle sound effect"
+					ariaPressed={soundOn}>
+					<span aria-hidden="true">
+						{soundOn ? (
+							<Volume2 strokeWidth={1.5} />
+						) : (
+							<VolumeOff strokeWidth={1.5} />
+						)}
+					</span>
+					<span className="sr-only">Toggle sound</span>
 				</IconButton>
 
 				<IconButton onClick={onResetClick} title="Reset game">
-					<Repeat strokeWidth={1.5} />
+					<span aria-hidden="true">
+						<Repeat strokeWidth={1.5} />
+					</span>
+					<span className="sr-only">Reset game</span>
 				</IconButton>
 			</div>
 		</header>

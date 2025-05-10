@@ -1,0 +1,1 @@
+export const CARD_FLIP_TRANSITION_TIME = 400;

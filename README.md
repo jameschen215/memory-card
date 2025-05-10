@@ -15,7 +15,10 @@
 
 ## TODO:
 
-- Change favicon
+- Change favicon ✓
+- Reset - scores and cards
+- Game info button
+- Responsive layout
 
 ## What I've learned from the project
 

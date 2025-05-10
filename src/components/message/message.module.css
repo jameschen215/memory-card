@@ -4,7 +4,6 @@
 	padding: 0 1em;
 	border-radius: 0.25em;
 	text-align: center;
-	/* background-color: hsl(0, 100%, 100%, 0.5); */
 
 	font-size: 2.4rem;
 	font-weight: 600;
@@ -12,10 +11,9 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	/* text-shadow: 1px 1px 0px hsl(0deg 0% 100%); */
 	text-shadow: 3px 3px 6px hsla(0, 0%, 0%, 0.5);
 
-	will-change: transform;
+	will-change: transform, opacity;
 }
 
 .win {
@@ -30,22 +28,30 @@
 	color: var(--text-yellow);
 }
 
-.message.empty {
+.empty {
+	color: var(--white);
 	background-color: transparent;
 }
 
 .message.is-changing {
-	animation: grow 250ms ease;
+	animation: grow 1000ms ease forwards;
 }
 
 @keyframes grow {
 	from {
+		opacity: 0;
 		transform: scale(0);
 	}
-	75% {
+	25% {
+		opacity: 1;
 		transform: scale(1.2);
 	}
-	to {
+	85% {
+		opacity: 1;
 		transform: scale(1);
+	}
+	to {
+		opacity: 0;
+		transform: scale(0);
 	}
 }

@@ -1,42 +1,63 @@
 import { useEffect, useRef, useState } from 'react';
 
 import styles from './message.module.css';
-import { getMessageAndStyle } from '../../helpers/get-message-and-style';
 import { MESSAGE_TRANSITION_TIME } from '../../constants/game-messages';
 
+import type { MessageType } from '../../types/message-type';
+import { getRandomMessageAndStyle } from '../../helpers/get-random-message';
+
 type MessageProps = {
-	state: {
-		id: number;
-		text: string | null;
-	};
+	message: MessageType | null;
 };
 
-export default function Message({ state }: MessageProps) {
-	const [visibleMessage, setVisibleMessage] = useState<string | null>(null);
-	const msgRef = useRef<HTMLDivElement>(null);
-	// const timeOutRef = useRef<number | null>(null);
+export default function Message({ message }: MessageProps) {
+	const [displayMsg, setDisplayMsg] = useState<MessageType | null>(null);
+	const [isAnimating, setIsAnimating] = useState(false);
+	const queueRef = useRef<MessageType[]>([]);
+	const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+	const { text, style } = getRandomMessageAndStyle(displayMsg?.message ?? '');
 
 	useEffect(() => {
-		if (!state.text) return;
+		if (!message) return;
+		if (displayMsg && displayMsg.id === message.id) return;
 
-		const { style, message } = getMessageAndStyle(state.text);
+		if (isAnimating) {
+			// Add to queue
+			queueRef.current.push(message);
+		} else {
+			triggerMessage(message);
+		}
 
-		setVisibleMessage(message);
-		msgRef.current?.classList.add(styles[style]);
-		msgRef.current?.classList.add(styles['is-changing']);
+		return () => {
+			if (timeoutRef.current) clearTimeout(timeoutRef.current);
+		};
+	}, [message?.id]);
 
-		const timeoutId = setTimeout(() => {
-			setVisibleMessage(null);
-			msgRef.current?.classList.remove(styles[style]);
-			msgRef.current?.classList.remove(styles['is-changing']);
+	function triggerMessage(msg: MessageType) {
+		setDisplayMsg(msg);
+		setIsAnimating(true);
+
+		timeoutRef.current = setTimeout(() => {
+			console.log('Animation complete - cleaning up message', msg.id);
+			setIsAnimating(false);
+			setDisplayMsg(null);
+
+			// Process the next message in queue if any
+			if (queueRef.current.length > 0) {
+				const next = queueRef.current.shift()!;
+				triggerMessage(next);
+			}
 		}, MESSAGE_TRANSITION_TIME);
-
-		return () => clearTimeout(timeoutId);
-	}, [state.id, state.text]);
+	}
 
 	return (
-		<div className={styles.message} ref={msgRef}>
-			{visibleMessage ? visibleMessage : ''}
+		<div
+			className={`${styles.message} ${style ? styles[style] : ''} ${
+				isAnimating ? styles['is-changing'] : ''
+			}`}
+			aria-live="polite">
+			{text ?? ''}
 		</div>
 	);
 }

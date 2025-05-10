@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-
 import styles from './counter.module.css';
 import { COUNTER_TRANSITION_TIME, DECIMAL_BASE } from '../../constants/counter';
 
@@ -9,13 +8,48 @@ type CounterProps = {
 };
 
 export default function Counter({ classNames, value }: CounterProps) {
-	const tens = Math.floor(value / DECIMAL_BASE);
-	const ones = value % DECIMAL_BASE;
+	const [displayValue, setDisplayValue] = useState(value);
+	const [isAnimating, setIsAnimating] = useState(false);
+	const queueRef = useRef<number[]>([]);
+
+	const tens = Math.floor(displayValue / DECIMAL_BASE);
+	const ones = displayValue % DECIMAL_BASE;
+
+	useEffect(() => {
+		if (value !== displayValue) {
+			if (isAnimating) {
+				// Queue the value
+				queueRef.current.push(value);
+			} else {
+				setDisplayValue(value);
+			}
+		}
+	}, [value, displayValue, isAnimating]);
 
 	return (
-		<div className={`${styles.counter} ${styles[classNames]}`}>
-			<CounterUnit classNames={tens === 0 ? 'invisible' : ''} value={tens} />
-			<CounterUnit classNames="" value={ones} />
+		<div
+			role="status"
+			aria-label={`Score: ${displayValue}`}
+			className={`${styles.counter} ${styles[classNames] ?? ''}`}>
+			<CounterUnit
+				classNames={tens === 0 ? 'invisible' : ''}
+				value={tens}
+				onAnimationStart={() => setIsAnimating(true)}
+				onAnimationEnd={() => {
+					setIsAnimating(false);
+
+					if (queueRef.current.length > 0) {
+						const next = queueRef.current.shift();
+						setDisplayValue(next!);
+					}
+				}}
+			/>
+			<CounterUnit
+				classNames=""
+				value={ones}
+				onAnimationStart={() => {}}
+				onAnimationEnd={() => {}}
+			/>
 		</div>
 	);
 }
@@ -23,9 +57,13 @@ export default function Counter({ classNames, value }: CounterProps) {
 function CounterUnit({
 	classNames,
 	value,
+	onAnimationStart,
+	onAnimationEnd,
 }: {
 	classNames: string;
 	value: number;
+	onAnimationStart: () => void;
+	onAnimationEnd: () => void;
 }) {
 	const unitRef = useRef<HTMLDivElement>(null);
 	const currentRef = useRef<HTMLDivElement>(null);
@@ -39,13 +77,14 @@ function CounterUnit({
 		if (nextRef.current) {
 			// update the value of next element
 			nextRef.current.innerText = String(value);
-			console.log('next');
 		}
 
 		if (unitRef.current) {
 			// enable the animation by adding the specific class name
 			unitRef.current.classList.add(styles['is-changing']);
 		}
+
+		onAnimationStart();
 
 		// after a specific time of animation, stop it
 		const timeout = setTimeout(() => {
@@ -62,15 +101,17 @@ function CounterUnit({
 
 			// save the current value as the previous value for the next increment
 			setPrevValue(value);
+
+			onAnimationEnd();
 		}, COUNTER_TRANSITION_TIME);
 
 		// clear
 		return () => clearTimeout(timeout);
-	}, [value, prevValue]);
+	}, [value, prevValue, onAnimationStart, onAnimationEnd]);
 
 	return (
 		<div
-			className={`${styles['counter-unit']} ${styles[classNames]}`}
+			className={`${styles['counter-unit']} ${styles[classNames] ?? ''}`}
 			ref={unitRef}>
 			<div className={styles['counter-number']} ref={currentRef}>
 				{prevValue}

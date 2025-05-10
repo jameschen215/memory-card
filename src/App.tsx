@@ -6,11 +6,13 @@ import Header from './components/header/header';
 import ScorePanel from './components/score-panel/score-panel';
 import Message from './components/message/message';
 
+import { MessageType } from './types/message-type';
+
 export default function App() {
 	const [score, setScore] = useState(0);
 	const [bestScore, setBestScore] = useState(0);
 	const [soundOn, setSoundOn] = useState(true);
-	const [message, setMessage] = useState<string | null>(null);
+	const [message, setMessage] = useState<MessageType | null>(null);
 
 	function playClickSound() {
 		const clickSound = new Audio('/audio/click.mp3');
@@ -23,6 +25,7 @@ export default function App() {
 
 		setScore(0);
 		setBestScore(0);
+
 		setMessage(null);
 	}
 
@@ -36,11 +39,11 @@ export default function App() {
 		<>
 			<Header
 				soundOn={soundOn}
-				onResetClick={() => handleReset()}
-				onSoundClick={() => handleToggleSound()}
+				onResetClick={handleReset}
+				onSoundClick={handleToggleSound}
 			/>
 			<ScorePanel score={score} bestScore={bestScore} />
-			<Message state={{ id: Date.now(), text: message }} />
+			<Message message={message} />
 			<Cards
 				soundOn={soundOn}
 				score={score}

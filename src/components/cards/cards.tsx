@@ -6,6 +6,10 @@ import { fetchEmojis } from '../../utils/fetch-data';
 import { SetStateAction } from 'react';
 import { Card } from './card';
 import type { EmojiItem } from '../../utils/fetch-data';
+import type { MessageType } from '../../types/message-type';
+
+import { CARD_FLIP_TRANSITION_TIME } from '../../constants/cards';
+import { MESSAGE_TRANSITION_TIME } from '../../constants/game-messages';
 
 type CardsProps = {
 	soundOn: boolean;
@@ -13,7 +17,7 @@ type CardsProps = {
 	bestScore: number;
 	setScore: React.Dispatch<SetStateAction<number>>;
 	setBestScore: React.Dispatch<SetStateAction<number>>;
-	setMessage: React.Dispatch<SetStateAction<string | null>>;
+	setMessage: React.Dispatch<SetStateAction<MessageType | null>>;
 };
 
 export default function Cards({
@@ -28,6 +32,8 @@ export default function Cards({
 	const [gameEmojis, setGameEmojis] = useState<EmojiItem[] | null>(null);
 	const [clickedEmojis, setClickedEmojis] = useState<number[]>([]);
 	const [flipped, setFlipped] = useState(false);
+	// const preventClicking = useRef(false);
+	const [preventClicking, setPreventClicking] = useState(false);
 
 	useEffect(() => {
 		async function loadEmojis() {
@@ -44,51 +50,67 @@ export default function Cards({
 		loadEmojis();
 	}, []);
 
-	function handleClick(id: number) {
-		// Play click sound
+	function playSound() {
 		if (soundOn) {
-			// const clickSound = new Audio('/audio/flip-card.mp3');
 			const clickSound = new Audio('/audio/card-flip.wav');
 			clickSound.volume = 0.5;
 			clickSound.play();
 		}
+	}
 
-		// Animation
+	function handleClick(id: number) {
+		if (preventClicking) return;
+
+		if (flipped) return; // Prevent multiple clicks during animation
+
+		// Address sound and card flipping animation
+		playSound();
 		setFlipped(true);
-
-		setTimeout(() => {
-			setFlipped(false);
-		}, 400);
+		// preventClicking. = true;
+		setPreventClicking(true);
+		setTimeout(() => setFlipped(false), CARD_FLIP_TRANSITION_TIME);
 
 		if (clickedEmojis.includes(id)) {
-			// Emoji already clicked: reset game
+			// Lose case
 			setScore(0);
+			setMessage({ id: Date.now(), message: 'lose' });
 			setClickedEmojis([]);
-			setMessage('lose');
+			// setTimeout(() => setMessage(null), MESSAGE_TRANSITION_TIME);
 		} else {
-			// New emoji clicked, update the scores immediately
-			setMessage('win');
+			// Win case
 			const newScore = score + 1;
-			if (newScore > bestScore) {
-				setMessage('record');
-			}
+			const isRecord = newScore > bestScore;
 
 			setScore(newScore);
 			setBestScore(Math.max(newScore, bestScore));
+			setMessage({
+				id: Date.now(),
+				message: isRecord ? 'record' : 'win',
+			});
+			setClickedEmojis((prev) => [...prev, id]);
 
-			// Update cards content when cards flip front face is down
+			// setTimeout(() => setMessage(null), MESSAGE_TRANSITION_TIME);
+
+			// Shuffle new cards mid-flip
 			setTimeout(() => {
-				setClickedEmojis([...clickedEmojis, id]);
-				// Show a new set of random images
-				setGameEmojis(shuffleArray(allEmojis!).slice(0, 6));
-			}, 200);
+				if (allEmojis) {
+					setGameEmojis(shuffleArray(allEmojis).slice(0, 6));
+				}
+			}, CARD_FLIP_TRANSITION_TIME / 2);
 		}
+
+		setTimeout(() => {
+			// preventClicking.current = false;
+			setPreventClicking(false);
+			console.log('animation complete!');
+		}, MESSAGE_TRANSITION_TIME);
 	}
 
 	return (
 		<div className={styles['cards-wrapper']}>
 			<div className={styles.cards}>
 				{!gameEmojis && <div>Loading...</div>}
+
 				{gameEmojis &&
 					gameEmojis.map((item, index) => (
 						<Card
@@ -96,6 +118,7 @@ export default function Cards({
 							content={item}
 							flipped={flipped}
 							onClick={() => handleClick(item.id)}
+							disabled={preventClicking}
 						/>
 					))}
 			</div>

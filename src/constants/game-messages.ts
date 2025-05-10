@@ -1,4 +1,4 @@
-export const MESSAGE_TRANSITION_TIME = 1000;
+export const MESSAGE_TRANSITION_TIME = 1050;
 
 export const MESSAGES = {
 	win: [
