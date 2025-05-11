@@ -1,7 +1,11 @@
 #root {
 	width: 100%;
-	max-width: 960px;
+}
+
+.app {
 	min-height: 100vh;
+	width: 100%;
+	max-width: 960px;
 	margin: 0 auto;
 
 	display: flex;
@@ -9,14 +13,14 @@
 	overflow: hidden;
 }
 
-.sr-only {
-	position: absolute;
-	width: 1px;
-	height: 1px;
-	padding: 0;
-	margin: -1px;
-	overflow: hidden;
-	clip: rect(0, 0, 0, 0);
-	border: 0;
-	white-space: nowrap;
+/* Disable animation and transition when page loading */
+.preload * {
+	animation-duration: 0s !important;
+	-webkit-animation-duration: 0s !important;
+
+	-webkit-transition: none !important;
+	-moz-transition: none !important;
+	-ms-transition: none !important;
+	-o-transition: none !important;
+	transition: none !important;
 }

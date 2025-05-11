@@ -48,7 +48,7 @@
 }
 
 .emoji {
-	font-size: 7.2rem;
+	font-size: 6.4rem;
 
 	font-family: 'Noto Color Emoji', sans-serif;
 	font-weight: 400;
@@ -63,6 +63,11 @@
 	opacity: 1;
 }
 
+.card:focus-visible {
+	outline: 2px solid var(--outline);
+	outline-offset: 4px;
+}
+
 .card.disabled {
 	pointer-events: none;
 }
@@ -74,5 +79,22 @@
 	transform: rotateZ(90deg);
 }
 
+@media screen and (min-width: 390px) {
+	.face {
+		width: 150px;
+	}
+
+	.emoji {
+		font-size: 7.2rem;
+	}
+}
+
 @media screen and (min-width: 768px) {
+	.face {
+		width: 180px;
+	}
+
+	.emoji {
+		font-size: 8.8rem;
+	}
 }

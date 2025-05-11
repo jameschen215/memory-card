@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { EmojiItem } from '../../utils/fetch-data';
+import { EmojiItem } from '../../data/fetch-data';
 
 type EmojiContextType = {
 	gameEmojis: EmojiItem[] | null;

@@ -1,4 +1,4 @@
-export function shuffleArray<T>(array: T[]) {
+export function shuffle<T>(array: T[]) {
 	// Creates a shallow copy of the original array,
 	// so you don’t accidentally change the original.
 	const shuffled = [...array];

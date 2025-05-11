@@ -1,15 +1,15 @@
 :root {
-	--white: hsla(0, 0%, 100%, 0.87);
+	--white: hsla(0, 0%, 100%, 0.95);
 	--black: hsl(0, 0%, 14%);
 	--bg-blue-1: hsl(191, 100%, 40%);
 	--bg-blue-2: hsl(195, 100%, 35%);
-	--outline: hsl(30, 100%, 70%);
+	--outline: hsl(30, 0%, 30%);
 	--text-green: hsl(120, 100%, 50%);
 	--text-yellow: hsl(51, 98%, 50%);
 	--text-red: hsl(310, 100%, 80%);
 
 	/* Card */
-	--bg-front-face: hsl(0, 0%, 95%);
+	--bg-front-face: hsl(0, 0%, 98%);
 	--bg-back-face: linear-gradient(
 		45deg,
 		hsl(155, 90%, 35%) 0%,
@@ -23,8 +23,9 @@ html {
 }
 
 body {
-	font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+	font-family: 'Titillium Web', sans-serif;
 	font-weight: 400;
+	font-style: normal;
 	font-size: 1.6rem;
 
 	display: flex;
@@ -42,4 +43,16 @@ a:focus-visible,
 button:focus-visible {
 	outline: 2px solid var(--outline);
 	outline-offset: 2px;
+}
+
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+	white-space: nowrap;
 }

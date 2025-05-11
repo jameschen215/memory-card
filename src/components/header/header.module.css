@@ -27,10 +27,12 @@
 }
 
 .brand__text {
-	font-family: 'DM Serif Display', serif;
-	font-style: normal;
+	font-family: 'Comic Relief', system-ui;
 	font-weight: 700;
+	font-style: normal;
+
 	font-size: 1.6rem;
+	text-shadow: 1px 1px 2px hsla(0, 0%, 0%, 0.15);
 }
 
 .button-group {

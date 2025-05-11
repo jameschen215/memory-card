@@ -4,7 +4,6 @@
 	align-items: center;
 	justify-content: center;
 	gap: 2em;
-	font-weight: 700;
 }
 
 .score-panel__score {
@@ -13,22 +12,7 @@
 	gap: 0.25em;
 }
 
-.score__text {
-	display: flex;
-	align-items: center;
-	gap: 0.6em;
-}
-
-.score__text__score,
-.score__text__best-score {
-	font-size: 2rem;
-	text-shadow: 1px 1px 0 hsla(0, 0%, 0%, 0.1);
-}
-
-.score__text__score {
-	color: var(--text-green);
-}
-
-.score__text__best-score {
-	color: var(--text-yellow);
+.score-panel__score__label {
+	font-size: 1.6rem;
+	font-weight: 600;
 }

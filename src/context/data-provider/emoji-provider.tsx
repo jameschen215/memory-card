@@ -1,8 +1,8 @@
 import { ReactNode, useEffect, useState } from 'react';
-import { EmojiItem, fetchEmojis } from '../../utils/fetch-data';
-import { shuffleArray } from '../../utils/utils';
 import { EmojiContext } from '../context/emoji-context';
 import { DEFAULT_CARDS_NUMBER } from '../../constants/cards';
+import { EmojiItem, fetchEmojis } from '../../data/fetch-data';
+import { shuffle } from '../../utils/utils';
 
 export default function EmojiProvider({ children }: { children: ReactNode }) {
 	const [allEmojis, setAllEmojis] = useState<EmojiItem[] | null>(null);
@@ -15,7 +15,7 @@ export default function EmojiProvider({ children }: { children: ReactNode }) {
 
 			if (data) {
 				setAllEmojis(data);
-				setGameEmojis(shuffleArray(data).slice(0, DEFAULT_CARDS_NUMBER));
+				setGameEmojis(shuffle(data).slice(0, DEFAULT_CARDS_NUMBER));
 			} else {
 				console.error('Failed to load valid image data.');
 			}
@@ -27,7 +27,7 @@ export default function EmojiProvider({ children }: { children: ReactNode }) {
 		if (!allEmojis) {
 			setGameEmojis([]);
 		} else {
-			setGameEmojis(shuffleArray(allEmojis).slice(0, DEFAULT_CARDS_NUMBER));
+			setGameEmojis(shuffle(allEmojis).slice(0, DEFAULT_CARDS_NUMBER));
 		}
 	}
 

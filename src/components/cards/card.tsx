@@ -1,6 +1,6 @@
 import styles from './card.module.css';
 
-import type { EmojiItem } from '../../utils/fetch-data';
+import { EmojiItem } from '../../data/fetch-data';
 
 type CardProps = {
 	content: EmojiItem;

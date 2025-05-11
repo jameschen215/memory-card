@@ -68,6 +68,7 @@ function CounterUnit({
 	const unitRef = useRef<HTMLDivElement>(null);
 	const currentRef = useRef<HTMLDivElement>(null);
 	const nextRef = useRef<HTMLDivElement>(null);
+	const timeRef = useRef<number | null>(null);
 
 	const [prevValue, setPrevValue] = useState(value);
 
@@ -87,7 +88,7 @@ function CounterUnit({
 		onAnimationStart();
 
 		// after a specific time of animation, stop it
-		const timeout = setTimeout(() => {
+		timeRef.current = setTimeout(() => {
 			if (currentRef.current && nextRef.current) {
 				// make the content of the current element and the content of
 				// the next element the same after the animation
@@ -105,8 +106,10 @@ function CounterUnit({
 			onAnimationEnd();
 		}, COUNTER_TRANSITION_TIME);
 
-		// clear
-		return () => clearTimeout(timeout);
+		// clear time out
+		return () => {
+			if (timeRef.current) clearTimeout(timeRef.current);
+		};
 	}, [value, prevValue, onAnimationStart, onAnimationEnd]);
 
 	return (

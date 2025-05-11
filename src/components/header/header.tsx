@@ -53,33 +53,35 @@ export default function Header() {
 					onClick={handleToggleSound}
 					title="Toggle sound effect"
 					ariaPressed={soundOn}>
-					<span aria-hidden="true">
+					<div aria-hidden="true" className={styles['btn-content']}>
 						{soundOn ? (
-							<Volume2 strokeWidth={1.5} />
+							<Volume2 strokeWidth={2} />
 						) : (
-							<VolumeOff strokeWidth={1.5} />
+							<VolumeOff strokeWidth={2} />
 						)}
-					</span>
+					</div>
 					<span className="sr-only">Toggle sound</span>
 				</IconButton>
 
 				<IconButton onClick={handleReset} title="Reset game">
 					<span aria-hidden="true">
-						<Repeat strokeWidth={1.5} />
+						<Repeat strokeWidth={2} />
 					</span>
 					<span className="sr-only">Reset game</span>
 				</IconButton>
+
 				<IconButton onClick={handleShowInfo} title="Game information">
 					<span aria-hidden="true">
 						{showHelpInfo ? (
-							<X strokeWidth={1.5} />
+							<X strokeWidth={2} />
 						) : (
-							<CircleHelp strokeWidth={1.5} />
+							<CircleHelp strokeWidth={2} />
 						)}
 					</span>
 					<span className="sr-only">Game information</span>
 				</IconButton>
 			</div>
+
 			<HelpInfo show={showHelpInfo} />
 		</header>
 	);

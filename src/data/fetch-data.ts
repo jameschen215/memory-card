@@ -1,6 +1,8 @@
 import { z } from 'zod';
 
-const apiEnd = 'https://api.emojisworld.fr/v1/random?&categories=4';
+const emojiCategoryId = 4; // Animals & Nature
+const fetchNumber = 24; //4 times of the number of the cards
+const apiEnd = `https://api.emojisworld.fr/v1/random?&categories=${emojiCategoryId}&limit=${fetchNumber}`;
 
 export const EmojiItemSchema = z.object({
 	id: z.number(),

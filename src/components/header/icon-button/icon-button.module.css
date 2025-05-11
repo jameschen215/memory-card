@@ -14,40 +14,10 @@
 	display: grid;
 	place-content: center;
 
-	will-change: transform;
-	transition: transform 200ms ease;
+	will-change: opacity;
+	transition: opacity 200ms ease;
 }
 
 .btn:hover {
-	animation: gelatine 500ms ease;
-}
-
-@keyframes gelatine {
-	from {
-		transform: scale(1, 1);
-	}
-	25% {
-		transform: scale(0.9, 1.1);
-	}
-	50% {
-		transform: scale(1.1, 0.9);
-	}
-	75% {
-		transform: scale(0.95, 1.05);
-	}
-	to {
-		transform: scale(1, 1);
-	}
-}
-
-@keyframes clicking {
-	form {
-		transform: rotate(0);
-	}
-	50% {
-		transform: rotate(180deg);
-	}
-	to {
-		transform: rotate(0);
-	}
+	opacity: 0.75;
 }

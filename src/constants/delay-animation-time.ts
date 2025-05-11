@@ -1,0 +1,1 @@
+export const DELAY_ANIMATION_TIME = 500;
