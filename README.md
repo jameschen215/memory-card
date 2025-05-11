@@ -13,13 +13,6 @@
 5. Style your application so you can show it off!
    As always, push the project to GitHub, and don’t forget to deploy it.
 
-## TODO:
-
-- Change favicon ✓
-- Reset - scores and cards
-- Game info button
-- Responsive layout
-
 ## What I've learned from the project
 
 ### Stable key Props in React
