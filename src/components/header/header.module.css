@@ -6,6 +6,9 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+
+	/* For help info */
+	position: relative;
 }
 
 .brand {

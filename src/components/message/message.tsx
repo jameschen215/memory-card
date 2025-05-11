@@ -1,16 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 
 import styles from './message.module.css';
-import { MESSAGE_TRANSITION_TIME } from '../../constants/game-messages';
-
 import type { MessageType } from '../../types/message-type';
+import { MESSAGE_TRANSITION_TIME } from '../../constants/game-messages';
 import { getRandomMessageAndStyle } from '../../helpers/get-random-message';
+import useMessage from '../../context/hooks/message-hook';
 
-type MessageProps = {
-	message: MessageType | null;
-};
-
-export default function Message({ message }: MessageProps) {
+export default function Message() {
+	const { message } = useMessage();
 	const [displayMsg, setDisplayMsg] = useState<MessageType | null>(null);
 	const [isAnimating, setIsAnimating] = useState(false);
 	const queueRef = useRef<MessageType[]>([]);
@@ -39,7 +36,6 @@ export default function Message({ message }: MessageProps) {
 		setIsAnimating(true);
 
 		timeoutRef.current = setTimeout(() => {
-			console.log('Animation complete - cleaning up message', msg.id);
 			setIsAnimating(false);
 			setDisplayMsg(null);
 

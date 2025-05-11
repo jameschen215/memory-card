@@ -1,0 +1,49 @@
+.help-info {
+	position: absolute;
+	top: 100%;
+	right: 0em;
+	padding: 0.6em 1.2em;
+	border-radius: 0.25em;
+	background-color: hsla(0, 0%, 1000%, 0.9);
+	box-shadow: 2px 2px 4px hsla(0, 0%, 0%, 0.15);
+
+	transform: translateX(100%);
+	opacity: 0;
+	will-change: transform, opacity;
+	animation: slide-out 500ms ease forwards;
+}
+
+.help-info p {
+	color: var(--bg-blue-2);
+	color: var(--black);
+	font-weight: 500;
+	/* text-shadow: 2px 2px 2px hsla(0, 0%, 0%, 1); */
+}
+
+.help-info.show {
+	opacity: 1;
+	animation: slide-in 500ms ease forwards;
+}
+
+@keyframes slide-in {
+	0% {
+		opacity: 0;
+		transform: translateX(100%);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateX(-0.5em);
+	}
+}
+@keyframes slide-out {
+	0% {
+		opacity: 1;
+		transform: translateX(0%);
+	}
+
+	100% {
+		opacity: 0;
+		transform: translateX(100%);
+	}
+}

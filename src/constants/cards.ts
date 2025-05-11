@@ -1,1 +1,3 @@
 export const CARD_FLIP_TRANSITION_TIME = 400;
+
+export const DEFAULT_CARDS_NUMBER = 6;

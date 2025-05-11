@@ -35,3 +35,13 @@ Or the array index if the order of elements is fixed and doesn’t change dynami
 This ensures React can properly reuse components and preserve their state and animation transitions.
 
 See code in `cards.tsx` and `card.tsx`.
+
+### Don't handle state and animation timing both in parent component and child component
+
+- Just set message in `Cards.tsx` component, and queue the message in the `Message.tsx` component, and let it schedule the animation. That is don't set message in `Cards.tsx`, set specific time out, and set message `null`. Just make the `Message` component do this job.
+
+- Prevent user input during any animation
+
+- Use ref to store time out id.
+
+- Use isAnimating state to track your animation course.

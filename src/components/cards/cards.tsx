@@ -1,54 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+
 import styles from './cards.module.css';
-
-import { shuffleArray } from '../../utils/utils';
-import { fetchEmojis } from '../../utils/fetch-data';
-import { SetStateAction } from 'react';
-import { Card } from './card';
-import type { EmojiItem } from '../../utils/fetch-data';
-import type { MessageType } from '../../types/message-type';
-
 import { CARD_FLIP_TRANSITION_TIME } from '../../constants/cards';
 import { MESSAGE_TRANSITION_TIME } from '../../constants/game-messages';
+import { useScores } from '../../context/hooks/score-hook';
+import useMessage from '../../context/hooks/message-hook';
+import useEmojis from '../../context/hooks/emoji-hook';
+import useSound from '../../context/hooks/sound-hook';
+import { Card } from './card';
 
-type CardsProps = {
-	soundOn: boolean;
-	score: number;
-	bestScore: number;
-	setScore: React.Dispatch<SetStateAction<number>>;
-	setBestScore: React.Dispatch<SetStateAction<number>>;
-	setMessage: React.Dispatch<SetStateAction<MessageType | null>>;
-};
+export default function Cards() {
+	const { gameEmojis, getRandomEmojis, clickedEmojis, setClickedEmojis } =
+		useEmojis();
+	const { score, bestScore, setScore, setBestScore } = useScores();
+	const { setMessage } = useMessage();
+	const { soundOn } = useSound();
 
-export default function Cards({
-	soundOn,
-	score,
-	bestScore,
-	setScore,
-	setBestScore,
-	setMessage,
-}: CardsProps) {
-	const [allEmojis, setAllEmojis] = useState<EmojiItem[] | null>(null);
-	const [gameEmojis, setGameEmojis] = useState<EmojiItem[] | null>(null);
-	const [clickedEmojis, setClickedEmojis] = useState<number[]>([]);
 	const [flipped, setFlipped] = useState(false);
-	// const preventClicking = useRef(false);
 	const [preventClicking, setPreventClicking] = useState(false);
-
-	useEffect(() => {
-		async function loadEmojis() {
-			const data = await fetchEmojis();
-
-			if (data) {
-				setAllEmojis(data);
-				setGameEmojis(shuffleArray(data).slice(0, 6));
-			} else {
-				console.error('Failed to load valid image data.');
-			}
-		}
-
-		loadEmojis();
-	}, []);
 
 	function playSound() {
 		if (soundOn) {
@@ -66,7 +35,6 @@ export default function Cards({
 		// Address sound and card flipping animation
 		playSound();
 		setFlipped(true);
-		// preventClicking. = true;
 		setPreventClicking(true);
 		setTimeout(() => setFlipped(false), CARD_FLIP_TRANSITION_TIME);
 
@@ -75,7 +43,6 @@ export default function Cards({
 			setScore(0);
 			setMessage({ id: Date.now(), message: 'lose' });
 			setClickedEmojis([]);
-			// setTimeout(() => setMessage(null), MESSAGE_TRANSITION_TIME);
 		} else {
 			// Win case
 			const newScore = score + 1;
@@ -87,22 +54,16 @@ export default function Cards({
 				id: Date.now(),
 				message: isRecord ? 'record' : 'win',
 			});
-			setClickedEmojis((prev) => [...prev, id]);
-
-			// setTimeout(() => setMessage(null), MESSAGE_TRANSITION_TIME);
+			setClickedEmojis((prev: number[]) => [...prev, id]);
 
 			// Shuffle new cards mid-flip
 			setTimeout(() => {
-				if (allEmojis) {
-					setGameEmojis(shuffleArray(allEmojis).slice(0, 6));
-				}
+				getRandomEmojis();
 			}, CARD_FLIP_TRANSITION_TIME / 2);
 		}
 
 		setTimeout(() => {
-			// preventClicking.current = false;
 			setPreventClicking(false);
-			console.log('animation complete!');
 		}, MESSAGE_TRANSITION_TIME);
 	}
 
