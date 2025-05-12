@@ -38,3 +38,17 @@ See code in `cards.tsx` and `card.tsx`.
 - Use ref to store time out id.
 
 - Use isAnimating state to track your animation course.
+
+### `:hover` issue on mobile phone
+
+Mobile devices may retain `:hover` styles after tapping elements, which can cause unintended UI behavior. To prevent this, I used a media query:
+
+```css
+@media (hover: hover) and (pointer: fine) {
+	.card:hover .front {
+		opacity: 0.7;
+	}
+}
+```
+
+This ensures the hover effect is only applied on devices that truly support it, like desktops with a mouse.
