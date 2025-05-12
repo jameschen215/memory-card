@@ -18,6 +18,8 @@
 	transition: opacity 200ms ease;
 }
 
-.btn:hover {
-	opacity: 0.75;
+@media (hover: hover) and (pointer: fine) {
+	.btn:hover {
+		opacity: 0.75;
+	}
 }
