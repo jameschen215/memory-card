@@ -3,7 +3,8 @@
 }
 
 .app {
-	min-height: 100vh;
+	/* Visible height, not including header and footer of a browser on phone */
+	min-height: calc(var(--vh, 1vh) * 100);
 	width: 100%;
 	max-width: 960px;
 	margin: 0 auto;
