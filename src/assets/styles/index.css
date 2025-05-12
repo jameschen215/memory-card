@@ -20,6 +20,9 @@
 
 html {
 	font-size: 62.5%;
+
+	/* CSS fix for 100vh in mobile WebKit */
+	height: -webkit-fill-available;
 }
 
 body {
@@ -37,6 +40,10 @@ body {
 	color: var(--white);
 	background: var(--bg-blue-1);
 	background: linear-gradient(45deg, var(--bg-blue-2), var(--bg-blue-1));
+
+	/* CSS fix for 100vh in mobile WebKit */
+	min-height: 100vh;
+	min-height: -webkit-fill-available;
 }
 
 a:focus-visible,

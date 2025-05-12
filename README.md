@@ -53,60 +53,17 @@ Mobile devices may retain `:hover` styles after tapping elements, which can caus
 
 This ensures the hover effect is only applied on devices that truly support it, like desktops with a mouse.
 
-### How to make the app occupy only the visible area of a browser on mobile phone, not 100vh
+### CSS fix for 100vh in mobile WebKit
 
-1. Create a useVisibleHeightUnit hook:
+```CSS
+html {
+  height: -webkit-fill-available;
+}
 
-```JavaScript
-import { useEffect } from 'react';
-
-export default function useVisibleHeightUnit() {
-	useEffect(() => {
-		function setVisibleHeightUnit() {
-			// This makes 1vh equals 1% of the height of the visible area,
-			// not 100vh that includes the header and footer of a web browser.
-			const vh = window.innerHeight * 0.01;
-
-			// This sets a custom CSS variable called --vh that you can use in your CSS.
-			// It stores the actual visible viewport height, unlike 100vh which
-			// lies on mobile.
-			document.documentElement.style.setProperty('--vh', `${vh}px`);
-		}
-
-		setVisibleHeightUnit();
-
-		// Whenever the screen resizes (e.g. rotate phone, keyboard opens),
-		// we recalculate the --vh value so it always stays correct.
-		window.addEventListener('resize', setVisibleHeightUnit);
-
-		// Removes the resize event listener when the component is unmounted,
-		// to prevent memory leaks.
-		return () => {
-			window.removeEventListener('resize', setVisibleHeightUnit);
-		};
-	}, []);
+body {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
 }
 ```
 
-2. Use the hook in your app:
-
-```JavaScript
-export default function App() {
-  useVisibleHeightUnit();
-
-  return (
-    <div className="app">
-      <h1>Hello Mobile</h1>
-    </div>
-  );
-}
-```
-
-3. Add css:
-
-```css
-.app {
-	height: calc(var(--vh, 1vh) * 100);
-	...;
-}
-```
+Code from [Math Smith](https://allthingssmitty.com/)'s blog [CSS fix for 100vh in mobile WebKit](https://allthingssmitty.com/2020/05/11/css-fix-for-100vh-in-mobile-webkit/). Great appreciation to him.
