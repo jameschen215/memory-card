@@ -73,7 +73,7 @@
 
 @media screen and (min-width: 390px) {
 	.face {
-		width: 150px;
+		width: 136px;
 	}
 
 	.emoji {
@@ -83,7 +83,7 @@
 
 @media screen and (min-width: 768px) {
 	.face {
-		width: 180px;
+		width: 160px;
 	}
 
 	.emoji {
