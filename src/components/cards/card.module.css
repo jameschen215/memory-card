@@ -77,12 +77,12 @@
 	}
 
 	.emoji {
-		font-size: 8.8rem;
+		font-size: 8rem;
 	}
 }
 
 @media (hover: hover) and (pointer: fine) {
 	.card:hover .front {
-		opacity: 0.7;
+		opacity: 0.75;
 	}
 }
